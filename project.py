@@ -1,5 +1,6 @@
 import random
 import sys
+import os
 
 COLOR_RESET = "\033[0m"
 COLOR_RED = "\033[91m"
@@ -29,14 +30,14 @@ def repartir(all_cards):
   
   
 def show_table(human_cards, cpu_cards, table_cards):
-  print()
-  print('********************* MY CARDS *********************')
-  print(sorted(human_cards))
+  print()  
   print(COLOR_GREEN)
   print('********************* TABLE *********************')
   for index in range (0, 4):
     print(table_cards[index])
   print(COLOR_RESET)  
+  print('********************* MY CARDS *********************')
+  print(sorted(human_cards))
   
   
 def choose_cards(human_cards, cpu_cards):  
@@ -53,6 +54,7 @@ def choose_cards(human_cards, cpu_cards):
         print(f'Player: {card1}')
         print(f'CPU: {card2}')
         input('Press any key to put the cards on the table...')
+        
         return (card1, card2, human_cards, cpu_cards)
     except KeyboardInterrupt:
       sys.exit()
@@ -91,7 +93,7 @@ def put_cards(card, table_cards):
       for index in range (0, 4):
         print(table_cards[index])
       print(COLOR_RESET)
-      sys.exit(f'GAME OVER: La carta {card} ha superado el límite permitido en cada fila')
+      sys.exit(f'GAME OVER: The card {card} has exceeded the allowed limit(5) in the row.')
   
   return(table_cards)  
 
@@ -104,9 +106,10 @@ def main():
     human_cards, cpu_cards, table_cards = repartir(all_cards)
     
     while True:    
+      os.system('cls')
+
       show_table(human_cards, cpu_cards, table_cards)
       card1, card2, human_cards, cpu_cards = choose_cards(sorted(human_cards), sorted(cpu_cards))
-
       
       if card1 < card2:
         table_cards = put_cards(card1, table_cards)
