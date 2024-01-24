@@ -3,8 +3,9 @@ import sys
 import os
 
 COLOR_RESET = "\033[0m"
-COLOR_RED = "\033[91m"
+COLOR_BLUE = "\033[94m"
 COLOR_GREEN = "\033[92m"
+COLOR_RED = "\033[91m"
 
 
 def repartir(all_cards):
@@ -49,11 +50,11 @@ def choose_cards(human_cards, cpu_cards):
       card1 = int(input('Choose a card: '))
       if card1 in human_cards:
         human_cards.remove(card1)
-        print()
+        print(COLOR_BLUE)
         print('********************* CARDS PLAYED *********************')
         print(f'Player: {card1}')
-        print(f'CPU: {card2}')
-        input('Press any key to put the cards on the table...')
+        print(f'CPU: {card2}')    
+        print(COLOR_RESET)   
         
         return (card1, card2, human_cards, cpu_cards)
     except KeyboardInterrupt:
@@ -80,7 +81,9 @@ def put_cards(card, table_cards):
   
   
   if diferencia_minima == 100:
-    print('***********************************************', COLOR_RED)
+    print(COLOR_RED)
+    print('***********************************************')
+    print(COLOR_RESET)
     sys.exit(sys.exit(f"GAME OVER: The card {card} can't be played in any row"))
   elif card > table_cards[min_index][-1]:
     table_cards[min_index].append(card)
@@ -110,6 +113,8 @@ def main():
 
       show_table(human_cards, cpu_cards, table_cards)
       card1, card2, human_cards, cpu_cards = choose_cards(sorted(human_cards), sorted(cpu_cards))
+      
+      input('Press Enter to put the cards on the table...')
       
       if card1 < card2:
         table_cards = put_cards(card1, table_cards)
